@@ -22,7 +22,7 @@ function Home({ navigation, route }) {
   const [Deaths, setDeaths] = useState();
   const [Lastupdated, setUpdate] = useState();
   const [worldpopulation, setPopulation] = useState();
-  const [Critical,setCritical]=useState();
+  const [Critical, setCritical] = useState();
   useEffect(() => {
     fetch("https://world-population.p.rapidapi.com/worldpopulation", {
       "method": "GET",
@@ -40,7 +40,7 @@ function Home({ navigation, route }) {
       .catch(err => {
         console.error(err);
       });
-  },[])
+  }, [])
 
 
   useEffect(() => {
@@ -51,11 +51,11 @@ function Home({ navigation, route }) {
         "x-rapidapi-host": "covid-19-data.p.rapidapi.com"
       }
     })
-      .then((response) => 
+      .then((response) =>
         response.json()
       )
-      .then((responseJson)=>{
-        const total= responseJson
+      .then((responseJson) => {
+        const total = responseJson
         setloading(false)
         setconfirmed(total[0].confirmed)
         setrecovered(total[0].recovered)
@@ -66,11 +66,11 @@ function Home({ navigation, route }) {
       .catch(err => {
         console.error(err);
       });
-  },[])
+  }, [])
 
   if (isloading) {
     return (
-      <View style={{flex:1,backgroundColor:'#931010', justifyContent:"center",alignItems:"center"}}>
+      <View style={{ flex: 1, backgroundColor: '#931010', justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="white" />
       </View>
     );
@@ -78,7 +78,7 @@ function Home({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ alignItems:"baseline",flexDirection: "row", marginBottom: 5, marginTop: 10 }}>
+      <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ alignItems: "baseline", flexDirection: "row", marginBottom: 5, marginTop: 10 }}>
         <Ionicons name="menu-outline" size={42} style={{ color: "white", fontWeight: "700" }} />
       </TouchableOpacity>
       <View style={{}}>
@@ -100,7 +100,7 @@ function Home({ navigation, route }) {
             <Text style={{ textAlign: "center", fontWeight: "800", fontSize: 23, color: "grey" }}>Deaths</Text>
 
             <Text style={{ marginTop: 5, fontSize: 32, fontWeight: "bold", textAlign: "center" }}>{Deaths}</Text>
-            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Deaths/Confirmed)*100).substring(0,4)}%</Text>
+            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Deaths / Confirmed) * 100).substring(0, 4)}%</Text>
           </View>
 
 
@@ -111,7 +111,7 @@ function Home({ navigation, route }) {
             <Text style={{ fontWeight: "800", fontSize: 23, color: "grey", textAlign: "center" }}>Recovered</Text>
 
             <Text style={{ marginTop: 5, fontSize: 30, fontWeight: "bold", textAlign: "center" }}>{Recovered}</Text>
-            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Recovered/Confirmed)*100).substring(0,4)}%</Text>
+            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Recovered / Confirmed) * 100).substring(0, 4)}%</Text>
 
           </View>
         </View>
@@ -125,7 +125,7 @@ function Home({ navigation, route }) {
 
             <Text style={{ fontWeight: "800", fontSize: 23, color: "grey", textAlign: "center" }}>Critical Cases</Text>
             <Text style={{ marginTop: 5, fontSize: 30, fontWeight: "bold", textAlign: "center" }}>{Critical}</Text>
-            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Critical/Confirmed)*100).substring(0,4)}%</Text>
+            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Critical / Confirmed) * 100).substring(0, 4)}%</Text>
 
 
           </View>
@@ -146,119 +146,119 @@ function Home({ navigation, route }) {
 
 function CountryStats({ navigation, route }) {
 
-  const [CName,setcName]=useState(route.params.cName);
-  const [loading,setloading]=useState(true);
+  const [CName, setcName] = useState(route.params.cName);
+  const [loading, setloading] = useState(true);
   const [Confirmed, setconfirmed] = useState();
   const [Recovered, setrecovered] = useState();
   const [Deaths, setDeaths] = useState();
   const [Lastupdated, setUpdate] = useState();
   const [Population, setPopulation] = useState();
-  const [Critical,setCritical]=useState();
-  const [starC,setStarC]=useState(true);
-  const [alreadyExist, setaexist]=useState(false);
-  useEffect(()=>{
-    fetch("https://world-population.p.rapidapi.com/population?country_name="+CName, {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-key": "aef9521e6dmshce5febaab9d4b31p1d6ae2jsne89dd0df205a",
-		"x-rapidapi-host": "world-population.p.rapidapi.com"
-	}
-})
-.then(response => response.json())
-.then((responseJson)=>{
-    setloading(false);
-    setPopulation(responseJson.body.population)
-})
-.catch(err => {
-	console.error(err);
-});
-  },[])
-
-  useEffect(()=>{
-    fetch("https://covid-19-data.p.rapidapi.com/country?name="+CName, {
+  const [Critical, setCritical] = useState();
+  const [starC, setStarC] = useState(true);
+  const [alreadyExist, setaexist] = useState(false);
+  useEffect(() => {
+    fetch("https://world-population.p.rapidapi.com/population?country_name=" + CName, {
       "method": "GET",
       "headers": {
         "x-rapidapi-key": "aef9521e6dmshce5febaab9d4b31p1d6ae2jsne89dd0df205a",
-		"x-rapidapi-host": "covid-19-data.p.rapidapi.com"
+        "x-rapidapi-host": "world-population.p.rapidapi.com"
       }
     })
-    .then(response => response.json())
-    .then((responseJson)=>{
-      setloading(false);
-      const data=responseJson
-      setconfirmed(data[0].confirmed);
-      setrecovered(data[0].recovered);
-      setDeaths(data[0].deaths);
-      setCritical(data[0].critical);
-      setUpdate(data[0].lastUpdate);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-  },[])
+      .then(response => response.json())
+      .then((responseJson) => {
+        setloading(false);
+        setPopulation(responseJson.body.population)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
+    fetch("https://covid-19-data.p.rapidapi.com/country?name=" + CName, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-key": "aef9521e6dmshce5febaab9d4b31p1d6ae2jsne89dd0df205a",
+        "x-rapidapi-host": "covid-19-data.p.rapidapi.com"
+      }
+    })
+      .then(response => response.json())
+      .then((responseJson) => {
+        setloading(false);
+        const data = responseJson
+        setconfirmed(data[0].confirmed);
+        setrecovered(data[0].recovered);
+        setDeaths(data[0].deaths);
+        setCritical(data[0].critical);
+        setUpdate(data[0].lastUpdate);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }, [])
+
+  useEffect(() => {
     DisplayStar();
-  },[])
+  }, [])
 
   if (loading) {
     return (
-      <View style={{flex:1,backgroundColor:'#931010', justifyContent:"center",alignItems:"center"}}>
+      <View style={{ flex: 1, backgroundColor: '#931010', justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="white" />
       </View>
     );
   }
 
-  async function checkExists(key){
-    var checkVal=await AsyncStorage.getItem(key);
-    if(checkVal===null){
-      AsyncStorage.setItem(key,CName);
+  async function checkExists(key) {
+    var checkVal = await AsyncStorage.getItem(key);
+    if (checkVal === null) {
+      AsyncStorage.setItem(key, CName);
 
     }
   }
 
 
-  const SaveData=()=>{
-    var key=CName;
+  const SaveData = () => {
+    var key = CName;
 
-   checkExists(key);
+    checkExists(key);
     //AsyncStorage.clear();
     //console.log(key)
     //console.log(CName)
   }
-  async function DisplayStar (){
-    var key=CName;
-    var checkVal=await AsyncStorage.getItem(key);
-    if(checkVal!==null){
+  async function DisplayStar() {
+    var key = CName;
+    var checkVal = await AsyncStorage.getItem(key);
+    if (checkVal !== null) {
       setStarC(false);
-      
-    }else{
+
+    } else {
       setStarC(true);
-  }
-  CStar()
+    }
+    CStar()
   }
 
-  function CStar(){
+  function CStar() {
     DisplayStar()
     return (
       <View>
-      {starC===true ? <Ionicons name="star-outline" size={32} style={{ color: "white" }} />: <Ionicons name="star" size={32} style={{ color: "white" }} />  }
- 
-          </View>
+        {starC === true ? <Ionicons name="star-outline" size={32} style={{ color: "white" }} /> : <Ionicons name="star" size={32} style={{ color: "white" }} />}
+
+      </View>
     );
   }
-  
+
 
   return (
     <View style={styles.container}>
 
       <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 5, marginTop: 10 }}>
         <TouchableOpacity>
-        <Ionicons name="chevron-back-outline" onPress={() => navigation.goBack()} size={38} style={{ color: "white", fontWeight: "700" }} />
+          <Ionicons name="chevron-back-outline" onPress={() => navigation.goBack()} size={38} style={{ color: "white", fontWeight: "700" }} />
         </TouchableOpacity>
-        <Text style={{color:"white", fontWeight:"600", fontSize:25}}>{CName}</Text>
-        <TouchableOpacity onPress={()=>{SaveData();  DisplayStar()}}>
-          <CStar/>
+        <Text style={{ color: "white", fontWeight: "600", fontSize: 25 }}>{CName}</Text>
+        <TouchableOpacity onPress={() => { SaveData(); DisplayStar() }}>
+          <CStar />
         </TouchableOpacity>
       </View>
 
@@ -280,7 +280,7 @@ function CountryStats({ navigation, route }) {
 
             <Text style={{ fontWeight: "800", fontSize: 23, color: "grey", textAlign: "center" }}>Corona Virus Cases</Text>
             <Text style={{ marginTop: 5, fontSize: 32, fontWeight: "bold", textAlign: "center" }}>{Confirmed}</Text>
-            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Confirmed/Population)*100).substring(0,4)}%</Text>
+            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Confirmed / Population) * 100).substring(0, 4)}%</Text>
 
 
           </View>
@@ -294,7 +294,7 @@ function CountryStats({ navigation, route }) {
             <Text style={{ textAlign: "center", fontWeight: "800", fontSize: 23, color: "grey" }}>Deaths</Text>
 
             <Text style={{ marginTop: 5, fontSize: 32, fontWeight: "bold", textAlign: "center" }}>{Deaths}</Text>
-            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Deaths/Confirmed)*100).substring(0,4)}%</Text>
+            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Deaths / Confirmed) * 100).substring(0, 4)}%</Text>
           </View>
 
 
@@ -305,7 +305,7 @@ function CountryStats({ navigation, route }) {
             <Text style={{ fontWeight: "800", fontSize: 23, color: "grey", textAlign: "center" }}>Recovered</Text>
 
             <Text style={{ marginTop: 5, fontSize: 32, fontWeight: "bold", textAlign: "center" }}>{Recovered}</Text>
-            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Recovered/Confirmed)*100).substring(0,4)}%</Text>
+            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Recovered / Confirmed) * 100).substring(0, 4)}%</Text>
 
           </View>
         </View>
@@ -319,7 +319,7 @@ function CountryStats({ navigation, route }) {
 
             <Text style={{ fontWeight: "800", fontSize: 23, color: "grey", textAlign: "center" }}>Critical Cases</Text>
             <Text style={{ marginTop: 5, fontSize: 32, fontWeight: "bold", textAlign: "center" }}>{Critical}</Text>
-            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Critical/Confirmed)*100).substring(0,4)}%</Text>
+            <Text style={{ marginTop: 5, fontSize: 18, fontWeight: "bold", color: "purple", textAlign: "center" }}>{JSON.stringify((Critical / Confirmed) * 100).substring(0, 4)}%</Text>
 
 
           </View>
@@ -340,77 +340,77 @@ function FavouriteCountries({ navigation, route }) {
 
   //const [getName, setName]=useState(route.params.countryvalue);
   //const [getkey,setKey]=useState( []);
-  const [countryName,setCountryName]=useState([]);
-  useEffect(()=>{
+  const [countryName, setCountryName] = useState([]);
+  useEffect(() => {
     GetData();
-  },[])
-  const GetData= async()=>{
-    var data=await AsyncStorage.getAllKeys()
+  }, [])
+  const GetData = async () => {
+    var data = await AsyncStorage.getAllKeys()
     //setKey(data);
     //console.log(data);
-    var temparry=[];
-    for(var i=0;i<data.length;i++){
-      var index=data[i];
-      
-      var getvalue=await AsyncStorage.getItem(index);
-      
-      temparry[i]=getvalue
+    var temparry = [];
+    for (var i = 0; i < data.length; i++) {
+      var index = data[i];
+
+      var getvalue = await AsyncStorage.getItem(index);
+
+      temparry[i] = getvalue
     }
     //console.log(temparry)
     setCountryName(temparry)
   }
 
-  async function remove(item){
+  async function remove(item) {
     await AsyncStorage.removeItem(item)
     GetData();
   }
   return (
     <View style={styles.favourtieContainer}>
-      <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-      <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ alignItems:"baseline",flexDirection: "row", marginBottom: 10, marginTop: 10 }}>
-        <Ionicons name="menu-outline" size={42} style={{ color: "white" }} />        
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => GetData()} style={{ alignItems:"baseline",flexDirection: "row", marginBottom: 10, marginTop: 10 }}>
-        <Ionicons name="refresh-circle" size={38} style={{ color: "white" }} />        
-      </TouchableOpacity>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ alignItems: "baseline", flexDirection: "row", marginBottom: 10, marginTop: 10 }}>
+          <Ionicons name="menu-outline" size={42} style={{ color: "white" }} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => GetData()} style={{ alignItems: "baseline", flexDirection: "row", marginBottom: 10, marginTop: 10 }}>
+          <Ionicons name="refresh-circle" size={38} style={{ color: "white" }} />
+        </TouchableOpacity>
       </View>
-      
-      <View>      
-      <Text style={{ color: 'white', fontSize: 35, fontWeight: "bold", marginTop: 15 }}>Saved Countries </Text>
+
+      <View>
+        <Text style={{ color: 'white', fontSize: 35, fontWeight: "bold", marginTop: 15 }}>Saved Countries </Text>
       </View>
       <View style={{ marginTop: 25 }}>
         <View>
-        
-    <FlatList
-      keyExtractor={(item)=>item}
-      data={countryName}
-      renderItem={({item})=>
-      (<TouchableOpacity onPress={()=>navigation.navigate("Country Stats",{cName:item })} style={{
-        flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 10, height: 80, width: "100%", backgroundColor: "white", borderRadius: 10, shadowColor: "grey", shadowOffset: { width: 2, height: 2, }, shadowOpacity: 0.5,
-        shadowRadius: 3, elevation: 10,
-      }}>
-       <Text style={{ fontWeight: "bold", fontSize: 23, color: "grey", textAlign: "center", marginLeft: 10 }}>{item}</Text>
-       <TouchableOpacity  onPress={()=>{remove(item)}}>
-            <Ionicons name="star" size={32} style={{ color: "grey", marginRight: 10 }}/>
-            </TouchableOpacity>
-      </TouchableOpacity>)
-      }
-    />
+
+          <FlatList
+            keyExtractor={(item) => item}
+            data={countryName}
+            renderItem={({ item }) =>
+            (<TouchableOpacity onPress={() => navigation.navigate("Country Stats", { cName: item })} style={{
+              flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 10, height: 80, width: "100%", backgroundColor: "white", borderRadius: 10, shadowColor: "grey", shadowOffset: { width: 2, height: 2, }, shadowOpacity: 0.5,
+              shadowRadius: 3, elevation: 10,
+            }}>
+              <Text style={{ fontWeight: "bold", fontSize: 23, color: "grey", textAlign: "center", marginLeft: 10 }}>{item}</Text>
+              <TouchableOpacity onPress={() => { remove(item) }}>
+                <Ionicons name="star" size={32} style={{ color: "grey", marginRight: 10 }} />
+              </TouchableOpacity>
+            </TouchableOpacity>)
+            }
+          />
         </View>
       </View>
     </View>
   );
 }
 
-function CountryList({navigation,route}) {
+function CountryList({ navigation, route }) {
   const [dataSource, setDataSource] = useState([]);
-  const [countryName, setCountrynames]=useState([]);
-  const [loading, setloading]=useState(true);
-  const [tempArrayHolder, setarrayHolder]=useState([]);
+  const [countryName, setCountrynames] = useState([]);
+  const [loading, setloading] = useState(true);
+  const [tempArrayHolder, setarrayHolder] = useState([]);
   const [query, setQuery] = useState('');
   const [fullData, setFullData] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetch("https://world-population.p.rapidapi.com/allcountriesname", {
       "method": "GET",
       "headers": {
@@ -418,20 +418,20 @@ function CountryList({navigation,route}) {
         "x-rapidapi-host": "world-population.p.rapidapi.com"
       }
     })
-    .then(response => response.json())
-    .then((responseJson)=>{
-      setloading(false);
-      setCountrynames(responseJson.body.countries.sort());
-      setFullData(responseJson.body);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-  },[])
+      .then(response => response.json())
+      .then((responseJson) => {
+        setloading(false);
+        setCountrynames(responseJson.body.countries.sort());
+        setFullData(responseJson.body);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }, [])
 
   if (loading) {
     return (
-      <View style={{flex:1,backgroundColor:'#931010', justifyContent:"center",alignItems:"center"}}>
+      <View style={{ flex: 1, backgroundColor: '#931010', justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="white" />
       </View>
     );
@@ -440,20 +440,22 @@ function CountryList({navigation,route}) {
 
   return (
     <View style={{ backgroundColor: "#F9F9F9", padding: 20, flex: 1 }}>
-      <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ alignItems:"baseline",flexDirection: "row", marginBottom: 10, marginTop: 10 }}>
+      <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ alignItems: "baseline", flexDirection: "row", marginBottom: 10, marginTop: 10 }}>
         <Ionicons name="menu-outline" size={42} style={{ color: "black" }} />
         <StatusBar style="auto" />
       </TouchableOpacity>
       <FlatList
         data={countryName}
-        keyExtractor={( index) => index}
-        renderItem={({ item,index }) => (
-          <TouchableOpacity activeOpacity={0.5} onPress={()=> {navigation.navigate("Country Stats",{cName: item })}}>
-            <View style={{ height: 80,marginBottom:5, width: "100%",
-             borderColor: "#931010", borderWidth:2,borderRadius:10,
-             backgroundColor:"#931010",
-               justifyContent:"center",alignItems:"center", textAlign:"center" }}>
-              <Text style={{color:"white"}}>{item}</Text>
+        keyExtractor={(index) => index}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity activeOpacity={0.5} onPress={() => { navigation.navigate("Country Stats", { cName: item }) }}>
+            <View style={{
+              height: 80, marginBottom: 5, width: "100%",
+              borderColor: "#931010", borderWidth: 2, borderRadius: 10,
+              backgroundColor: "#931010",
+              justifyContent: "center", alignItems: "center", textAlign: "center"
+            }}>
+              <Text style={{ color: "white" }}>{item}</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -483,21 +485,21 @@ const Drawer = createDrawerNavigator();
 */
 const Stack = createStackNavigator();
 
-function CountryStackscreens(){
-  return(
+function CountryStackscreens() {
+  return (
     <Stack.Navigator initialRouteName="Country List">
-        <Stack.Screen name="Country List" options={{ headerShown: false }} component={CountryList} />
-        <Stack.Screen name="Country Stats" options={{headerShown:false}} component={CountryStats} />
-      </Stack.Navigator>
+      <Stack.Screen name="Country List" options={{ headerShown: false }} component={CountryList} />
+      <Stack.Screen name="Country Stats" options={{ headerShown: false }} component={CountryStats} />
+    </Stack.Navigator>
   );
 }
 
-function FavouriteStackscreens(){
-  return(
+function FavouriteStackscreens() {
+  return (
     <Stack.Navigator initialRouteName="Favourite Countries">
-        <Stack.Screen name="Favourite Countries" options={{headerShown:false}} component={FavouriteCountries} />
-        <Stack.Screen name="Country Stats" options={{headerShown:false}} component={CountryStats} />
-      </Stack.Navigator>
+      <Stack.Screen name="Favourite Countries" options={{ headerShown: false }} component={FavouriteCountries} />
+      <Stack.Screen name="Country Stats" options={{ headerShown: false }} component={CountryStats} />
+    </Stack.Navigator>
   );
 }
 
